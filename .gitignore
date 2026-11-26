@@ -1,0 +1,50 @@
+# Python caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+.hypothesis/
+.coverage
+.coverage.*
+htmlcov/
+
+# Virtual environments
+/.venv/
+/venv/
+/env/
+
+# Packaging
+/build/
+/dist/
+*.egg-info/
+*.egg
+/wheels/
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Operating system files
+.DS_Store
+.AppleDouble
+Thumbs.db
+desktop.ini
+
+# Secrets and local environment
+.env
+.env.*
+
+# Throwaway output
+/scratch/
+*.log
+/bouquet-config*.json
+
+#cz this aint a docs, it a dodge idk what im sayin but yea
+/docs
