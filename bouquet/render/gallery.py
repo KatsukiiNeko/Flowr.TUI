@@ -86,7 +86,12 @@ class _GalleryProjector(SampleProjector):
         self.st = 0.0
 
 
-def gallery_lines(settings: Settings, ansi: bool = False, ascii_mode: bool = False) -> List[str]:
+def gallery_lines(
+    settings: Settings,
+    ansi: bool = False,
+    ascii_mode: bool = False,
+    max_width: int = 0,
+) -> List[str]:
     varieties = list(all_varieties())
     theme = get_theme(getattr(settings, "theme", "classic"))
     style = effective_style(getattr(settings, "style", "ascii"), ascii_mode=ascii_mode, color_enabled=ansi)
@@ -122,4 +127,6 @@ def gallery_lines(settings: Settings, ansi: bool = False, ascii_mode: bool = Fal
                 rows.append("  ".join(box[y] for box in rendered_boxes).rstrip())
             rows.append("")
     rows.append("Inspired by Ascii-Flower-Bouquet by Alish Sharma (MIT).")
+    if max_width and not ansi:
+        rows = [fit(line, max_width) for line in rows]
     return rows

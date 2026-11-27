@@ -305,6 +305,8 @@ def draw_scene(
     detail: Optional[int] = None,
     petal_fall=None,
     color_enabled: bool = True,
+    stats: Optional[dict] = None,
+    glyph_history: Optional[dict] = None,
 ) -> None:
     x0, y0, x1, y1 = clip
     view_w = max(1, x1 - x0)
@@ -397,6 +399,8 @@ def draw_scene(
         truecolor=truecolor,
         color_enabled=color_enabled,
         ascii_mode=ascii_mode,
+        stats=stats,
+        glyph_history=glyph_history,
     )
 
 

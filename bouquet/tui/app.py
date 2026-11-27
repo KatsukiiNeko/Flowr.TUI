@@ -112,6 +112,7 @@ class App:
         self.toast_text = ""
         self.toast_until = 0.0
         self._last_size: Optional[Tuple[int, int]] = None
+        self._glyph_history: Dict[Tuple[int, int], str] = {}
         self.too_small = False
         self.buffer = CellBuffer(self.cols, self.rows)
 
@@ -419,6 +420,8 @@ class App:
             self.settings.wrap = get_theme(self.settings.theme).wrap_style
         if "style" in fields and self.ascii_mode:
             self.settings.style = "ascii"
+        if {"detail", "style", "theme", "color_mode"} & set(fields):
+            self._glyph_history.clear()
         if "detail" in fields:
             self._perf_hint_shown = False
             self._low_fps_since = None
@@ -516,6 +519,7 @@ class App:
         if force or cols != self.buffer.cols or rows != self.buffer.rows:
             self.buffer = CellBuffer(cols, rows)
             self.cols, self.rows = cols, rows
+            self._glyph_history.clear()
             self.presenter.invalidate()
         self._maybe_update_auto_detail(time.monotonic(), allow_upgrade=True)
 
@@ -532,6 +536,7 @@ class App:
                 idx = DETAIL_LEVELS.index(self._auto_detail) if self._auto_detail in DETAIL_LEVELS else 1
                 if idx > 0:
                     self._auto_detail = DETAIL_LEVELS[idx - 1]
+                    self._glyph_history.clear()
                     self._last_auto_change = now
                     self._low_fps_since = None
                     self.rebuild(async_detail=True)
@@ -540,6 +545,7 @@ class App:
             self._low_fps_since = None
         if target != self._auto_detail and (now - self._last_auto_change >= AUTO_HYSTERESIS_SECONDS or self._last_auto_change == 0.0):
             self._auto_detail = target
+            self._glyph_history.clear()
             self._last_auto_change = now
             self.rebuild(async_detail=True)
 
@@ -635,6 +641,7 @@ class App:
             detail=self.scene.detail,
             petal_fall=self.petals if settings.petal_fall > 0 else None,
             color_enabled=self.color,
+            glyph_history=self._glyph_history,
         )
         draw_message(buffer, rows - 2, 0, scene_w, settings, self.t, self.ascii_mode, color_enabled=self.color)
 

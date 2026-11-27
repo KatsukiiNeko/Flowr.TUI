@@ -34,7 +34,7 @@ THEME_NAMES = (
     "rainbow",
 )
 DETAIL_CHOICES = ("auto", "32", "64", "128", "256")
-STYLE_CHOICES = ("ascii", "half", "braille")
+STYLE_CHOICES = ("ascii", "half", "braille", "sextant")
 COLOR_MODES = ("auto", "256", "truecolor", "mono")
 GREENERY_TYPES = ("eucalyptus", "fern", "wheat", "mixed", "off")
 
@@ -93,7 +93,7 @@ FIELD_META: Dict[str, FieldMeta] = {
     "detail": FieldMeta("detail", "Detail", TAB_LOOK, "choice", choices=DETAIL_CHOICES,
                         hint="Internal sample canvas height (Auto matches terminal)"),
     "style": FieldMeta("style", "Style", TAB_LOOK, "choice", choices=STYLE_CHOICES,
-                       hint="Glyph style: ascii (1x1), half (1x2), braille (2x4)"),
+                       hint="Glyph style: ascii (1x1), half (1x2), braille (2x4), sextant (2x3)"),
     "color_mode": FieldMeta("color_mode", "Colour mode", TAB_LOOK, "choice", choices=COLOR_MODES,
                             hint="auto uses 24-bit truecolor when COLORTERM is set"),
     "wrap": FieldMeta("wrap", "Wrap", TAB_LOOK, "choice", choices=WRAP_STYLES,

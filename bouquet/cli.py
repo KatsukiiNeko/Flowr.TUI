@@ -26,6 +26,17 @@ from .render.snapshot import render_snapshot
 from .tui.app import App
 
 
+def parse_size(value: str) -> tuple:
+    try:
+        cols, rows = value.lower().split("x", 1)
+        cols, rows = int(cols), int(rows)
+    except ValueError:
+        raise argparse.ArgumentTypeError("expected COLSxROWS, e.g. 120x40")
+    if cols < 20 or rows < 12:
+        raise argparse.ArgumentTypeError("size must be at least 20x12")
+    return cols, rows
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="bouquet",
@@ -49,6 +60,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--gallery", action="store_true", help="print all ten varieties and exit")
     parser.add_argument("--snapshot", nargs="?", const="-", metavar="PATH",
                         help="render one frame and exit (stdout when PATH is omitted)")
+    parser.add_argument("--size", type=parse_size, metavar="COLSxROWS",
+                        help="explicit size for --snapshot and --gallery (e.g. 120x40)")
     parser.add_argument("--at", type=float, default=0.0, metavar="SECONDS",
                         help="animation time for --snapshot / starting time")
     return parser
@@ -92,14 +105,20 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
     if args.gallery:
         color = sys.stdout.isatty() and not no_color
-        lines = gallery_lines(settings, ansi=color, ascii_mode=args.ascii)
+        lines = gallery_lines(
+            settings, ansi=color, ascii_mode=args.ascii,
+            max_width=args.size[0] if args.size else 0,
+        )
         sys.stdout.write("\n".join(lines) + "\n")
         return 0
 
     if args.snapshot is not None:
-        size = shutil.get_terminal_size(fallback=(80, 24))
-        width = max(20, size.columns)
-        height = max(12, size.lines)
+        if args.size:
+            width, height = args.size
+        else:
+            size = shutil.get_terminal_size(fallback=(80, 24))
+            width = max(20, size.columns)
+            height = max(12, size.lines)
         ansi = args.snapshot == "-" and sys.stdout.isatty() and not no_color
         output = render_snapshot(
             settings, width, height, max(0.0, args.at), args.ascii, ansi,
