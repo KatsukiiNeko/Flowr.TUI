@@ -24,7 +24,7 @@ Mix ten flower varieties, tune motion and effects live, choose how much detail t
 
 - 🌹 **Ten flower varieties**, freely mixed in one bouquet
 - 🎨 **Nine curated colour themes** that coordinate flowers, wrap, ribbon, hearts and message colours
-- 🔍 **Selectable detail** from `32` to `256` samples, drawn as ASCII, half-blocks or braille
+- 🔍 **Selectable detail** from `32` to `256` samples, drawn as shape-matched ASCII, half-blocks, braille or sextants
 - 🌿 **Greenery and falling petals**: eucalyptus, fern or wheat sprigs, plus petals that drift behind the bouquet
 - 💗 **Live controls** for motion, effects, FPS and the caption, all adjustable while it runs
 - 💾 **Persistent settings** and built-in presets
@@ -96,8 +96,8 @@ The **Look** tab collects the rendering controls.
 
 | Setting | Options | What it does |
 | --- | --- | --- |
-| **Detail** | `auto`, `32`, `64`, `128`, `256` | Sets the height of the square sample canvas. Auto matches the terminal size and lowers detail if the frame rate falls. |
-| **Style** | `ascii`, `half`, `braille` | Draws samples as ASCII glyphs, half blocks or braille dots. Falls back to ascii on limited terminals. |
+| **Detail** | `auto`, `32`, `64`, `128`, `256` | Sets the height of the square sample canvas. Higher levels resolve cell edges with a 4x8 glyph-mask match. Auto matches the terminal size and lowers detail if the frame rate falls. |
+| **Style** | `ascii`, `half`, `braille`, `sextant` | Draws samples as shape-matched ASCII glyphs, half blocks, braille dots or legacy-computing sextants. Falls back to ascii on limited terminals. |
 | **Colour mode** | `auto`, `256`, `truecolor`, `mono` | Chooses how colour is emitted. |
 | **Theme** | nine curated themes | Coordinates flowers, wrap, ribbon, hearts and message colours. |
 | **Greenery** | eucalyptus, fern, wheat | Adds sprigs around the flowers. |
