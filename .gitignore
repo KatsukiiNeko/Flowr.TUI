@@ -46,5 +46,13 @@ desktop.ini
 *.log
 /bouquet-config*.json
 
-#cz this aint a docs, it a dodge idk what im sayin but yea
+#cz this aint a docs, it a dog idk what im sayin but yea
 /docs
+compare.py
+compare2.py
+a64.txt
+a256.txt
+b64.txt
+b256.txt
+
+/tools
