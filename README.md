@@ -33,6 +33,8 @@ Mix ten flower varieties, tune motion and effects live, choose how much detail t
 ## Quick start
 
 ```sh
+git clone https://github.com/KatsukiiNeko/Flowr.TUI.git Flwr.TUI
+cd Flwr.TUI
 python -m bouquet
 ```
 
